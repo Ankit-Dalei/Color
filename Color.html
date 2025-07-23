@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        .header{
+            height: 100vh;
+            width: 100%;
+            background-color: rgb(0, 0, 0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 13px;
+        }
+        #box{
+            height: 50px;
+            width: 300px;
+            border: 2px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: greenyellow;
+            font-weight: bold;
+        }
+        #h1{
+            color: white;
+        }
+        #colorPicker {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 10px;
+            height: auto;
+            width: auto;
+            border: 2px solid rgb(255, 255, 255);
+        }
+    
+        .color-box {
+          width: 40px;
+          height: 40px;
+          border: 2px solid #ccc;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+    
+        .color-box:hover {
+          border-color: #664545;
+          transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="header" id="header">
+        <h1 id="h1">Select a color</h1>
+        <div id="colorPicker"></div>
+        <div id="colorChanger"></div>
+        <div id="box"></div>
+    </div>
+    <script>
+        const picker = document.getElementById("colorPicker");
+        const h1 = document.getElementById("h1");
+        let colorChanger=document.getElementById('colorChanger');
+        let header=document.getElementById('header');
+        let box=document.getElementById('box');
+        let selector=null;
+        let mappedX=null;
+        let mappedY=null;
+        let mappedZ=null;
+
+
+
+        // creating pickers
+       const colors = [
+          { name: "red", r: 255, g: 0, b: 0 },
+          { name: "blue", r: 0, g: 0, b: 255 },
+          { name: "green", r: 0, g: 128, b: 0 },
+          { name: "yellow", r: 255, g: 255, b: 0 },
+          { name: "orange", r: 255, g: 165, b: 0 },
+          { name: "pink", r: 255, g: 192, b: 203 },
+          { name: "purple", r: 128, g: 0, b: 128 },
+          { name: "white", r: 255, g: 255, b: 255 }
+        ];
+
+        
+        colors.forEach(color => {
+            console.log(color)
+          const boxs = document.createElement("div");
+          boxs.className = "color-box";
+          boxs.style.backgroundColor = color.name;
+      
+          boxs.addEventListener("click", () => {
+            document.body.style.backgroundColor = color.name;
+            h1.innerText=`${color.name}`
+            mappedX=color.g
+            mappedY=color.r
+            mappedZ=color.b
+            colorChanger.style.background=`linear-gradient(to right,rgb(0,0,0), rgb(${mappedY} ${mappedX} ${mappedZ}))`
+            header.style.background=`linear-gradient(to right bottom,rgb(0,0,0), rgb(${mappedY} ${mappedX} ${mappedX}) , rgb(${mappedY-10} ${mappedX+23} ${mappedX-20}))`
+            box.style.backgroundColor=`rgb(${mappedY} ${mappedX} ${mappedZ}) `
+            box.innerText=`rgb(${mappedY} ${mappedX} ${mappedZ}) `
+            selector=color
+          });
+      
+          picker.appendChild(boxs);
+        });
+
+
+
+        // // createChange color design
+        colorChanger.style.height='200px'
+        colorChanger.style.width='300px'
+        colorChanger.style.border=`2px solid white`
+        
+        
+        // change color logic
+        function mapClamped(value, inMin, inMax, outMin, outMax) {
+            const mapped = (value - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+            return Math.min(outMax, Math.max(outMin, Math.floor(mapped)));        
+        }
+        colorChanger.addEventListener("mousemove",(e)=>{
+            const rect = colorChanger.getBoundingClientRect();
+            const x = Math.trunc(e.clientX - rect.left);
+            const y = Math.trunc(e.clientY - rect.top);
+
+            mappedX = mapClamped(y, 0, rect.height, 0, 255);
+            mappedY = mapClamped(x, 0, rect.width, 0, 255);
+
+            console.log(x,y);
+            colorChanger.style.backgroundColor=`rgb(${mappedY} ${mappedX} ${mappedX}) `
+            box.style.backgroundColor=`rgb(${mappedY} ${mappedX} ${mappedX}) `
+            colorChanger.style.background=`linear-gradient(to right,rgb(0,0,0), rgb(${mappedY} ${mappedX} ${mappedX}))`
+            box.innerText=`rgb(${mappedY} ${mappedX} ${mappedX}) `
+            header.style.background=`linear-gradient(to right bottom,rgb(0,0,0), rgb(${mappedY} ${mappedX} ${mappedX}) , rgb(${mappedY-10} ${mappedX+23} ${mappedX-20}), rgb(${mappedY+10} ${mappedX-23} ${mappedX+20}))`
+        })
+    </script>
+</body>
+</html>
