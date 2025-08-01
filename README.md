@@ -28,7 +28,7 @@ An interactive web tool that allows users to **select a base color** from a colo
 ### 🔗 Live Demo
 
 Explore it now:  
-🌐 **<a href='https://ankit-dalei.github.io/Color/](https://color-tau-two.vercel.app/'>Live Website</a>**
+🌐 **<a href='https://ankit-dalei.github.io/Color/](https://color-tau-two.vercel.app/' target='1'>Live Website</a>**
 
 ---
 
