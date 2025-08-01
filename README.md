@@ -28,7 +28,7 @@ An interactive web tool that allows users to **select a base color** from a colo
 ### 🔗 Live Demo
 
 🌐 <span>
-  🔗 <a href="https://portfolio-nu-bice-89.vercel.app/" target="_blank"><strong>View Live Portfolio</strong></a>
+  🔗 <a href="https://color-tau-two.vercel.app/" target="_blank"><strong>View Live Portfolio</strong></a>
 </span>
 
 ---
